@@ -31,6 +31,9 @@ public class ROS_Websocket : MonoBehaviour
     public RotateJoint2 joint2;
     public RotateJoint3 joint3;
 
+    public string IP;
+    public string PORT;
+
     float RotationA = 0, RotationB = 0, RotationC = 0, RotationD = 0;
     float resizePending = -1;
 
@@ -90,7 +93,7 @@ public class ROS_Websocket : MonoBehaviour
 
 
         //use WebSocketSharp to connect to the rosbridge
-        ws = new WebSocket("ws://192.168.1.2:9090");
+        ws = new WebSocket("ws://" + IP + ":" + PORT);
         ws.Connect();
 
         if (ws.IsAlive)
@@ -136,10 +139,10 @@ public class ROS_Websocket : MonoBehaviour
          joint3.RotationC = RotationC;
          joint3.CallRotateC();*/
 
-        if (!manager.controller.AI.IsActive)
-        {
+        //if (!manager.controller.AI.IsActive)
+        //{
             fk.Move(j1, j2, j3, j4);
-        }
+        //}
         if (has_update)
         {
 
