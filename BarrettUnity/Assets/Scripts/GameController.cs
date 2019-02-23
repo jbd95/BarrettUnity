@@ -82,7 +82,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         User_Position = BucketBoxPosition(Bucket.transform.position);
-        Arrow.Align();
+        //Arrow.Align();
     }
 
     void OnApplicationQuit()
@@ -450,7 +450,7 @@ public class GameController : MonoBehaviour
             YValues.Add(yStartValue + (y * yinterval));
         }
 
-        Arrow.StartPosition = GetBoxCoordinatesRelativeToUIContainer(manager.GridCenter.x, manager.GridCenter.y);
+        //Arrow.StartPosition = GetBoxCoordinatesRelativeToUIContainer(manager.GridCenter.x, manager.GridCenter.y);
 
         SetupGrid();
     }

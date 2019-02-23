@@ -144,20 +144,29 @@ public class Login : MonoBehaviour
 
     public void LoadGame(User user)
     {
-        LoadedUser = user;
+        /*LoadedUser = user;
         NewUserScreen.SetActive(false);
         ExistingUserScreen.SetActive(false);
         LoadingScreen.SetActive(true);
         StartCoroutine(LoadingAnimation());
         SceneManager.LoadSceneAsync("Main", LoadSceneMode.Single);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main"));
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;*/
+
+        LoadedUser = user;
+        NewUserScreen.SetActive(false);
+        ExistingUserScreen.SetActive(false);
+        LoadingScreen.SetActive(true);
+        StartCoroutine(LoadingAnimation());
+        SceneManager.LoadSceneAsync("Main_2.0", LoadSceneMode.Single);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main_2.0"));
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        GameObject.FindGameObjectWithTag("Controller").GetComponent<GameController>().CurrentUser = LoadedUser;
-        GameObject.FindGameObjectWithTag("Controller").GetComponent<GameController>().UpdateUser();
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>().UpdateUser(LoadedUser.Name);
+        //GameObject.FindGameObjectWithTag("Controller").GetComponent<GameController>().UpdateUser();
     }
 
     public List<string> GetUserList()
@@ -190,7 +199,7 @@ public class Login : MonoBehaviour
 
     public void CallAnimateContinueButton()
     {
-        
+
     }
 
     private IEnumerator AnimateContinueButton(Button button, Vector3 start)

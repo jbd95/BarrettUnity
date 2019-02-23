@@ -5,26 +5,23 @@ using System;
 
 public class Forward_Kinematics : MonoBehaviour
 {
-   // double[,] result2;
-
-    void Start()
-    {
-        ActionTable<double> table = new ActionTable<double>(4, 4, _zero:0, _one:1);
-        table.GenerateTableFromDistance(0.5, GameManager.Caught.Yes);
-
-
-        ActionTable<GameManager.Caught> testing = new ActionTable<GameManager.Caught>(4, 4, _random:true, _zero: GameManager.Caught.No, _one: GameManager.Caught.Yes);
-        Debug.Log(testing.ToString());
-
-        Matrix4x4 test = new Matrix4x4();
-        Matrix4x4 test2 = new Matrix4x4();
-
-        var test3 = test * test2;
-    }
+    // double[,] result2;
+    public float Multiplier;
+    public Vector3 HomePosition;
+    public Vector3 EEPosition;
+    public float Multiplier2= 100;
 
     public void Print()
     {
         //PrintMatrix(result2, 4, 4);
+    }
+
+
+    public void SetHome()
+    {
+        HomePosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        HomePosition.x = 0;
+        Debug.Log("new home position: " + HomePosition);
     }
 
     public void Move(double j1, double j2, double j3, double j4)
@@ -34,7 +31,12 @@ public class Forward_Kinematics : MonoBehaviour
         //result2 = result;
 
         var result = ForwardKinematics(new double[] { j1, j2, j3, j4 });
-        transform.position = new Vector3(0f, (float)result[1, 3], (float)result[2, 3]);
+        //transform.position = new Vector3(0f, Multiplier * (float)result[1, 3], Multiplier * (float)result[2, 3]);
+        Vector3 newPosition = new Vector3(Multiplier * (float)result[2, 3], Multiplier * -(float)result[0, 3], 0f);
+        
+        EEPosition = new Vector3(Multiplier2 * (float)result[0, 3], Multiplier2 * (float)result[1, 3], Multiplier2 * (float)result[2, 3]);
+
+        transform.position = newPosition - HomePosition;
     }
 
 
@@ -256,6 +258,7 @@ public class Forward_Kinematics : MonoBehaviour
             Debug.Log("Matrix at row " + i + ": " + row);
         }
     }*/
+   
 }
 
 public class Matrix
